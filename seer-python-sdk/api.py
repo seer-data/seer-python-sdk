@@ -57,18 +57,18 @@ def delete_insight(insight_id, xtkn, endpoint=endpoint):
     response = requests.delete(url,  headers={'content-type':'application/json', 'x-token':xtkn})
     return response
 
-def create_new_insight(insight, xtkn, suitcase_id, endpoint=endpoint):
-    """
-    Arguments: insight (json), dest_suitcase (int)
-    Returns: None. Creates new insights in the Suitcase provided from the Insight objects provided.
-    Notes: Could be an improvement to return list of insight_ids created.
-    To create a brand new insight, post the necessary insight data to the back-end without an insight ID.
-    """
-    ## Post to dest_suitcase
-    url = endpoint + '/insights'
-    postData = {'key': insight['key'], 'name': insight['name'], 'json': insight['json'], 'subheading': insight['subheading'], "suitcase_id": suitcase_id}
-    response = requests.post(url,  headers={'content-type':'application/json', 'x-token':xtkn}, data=json.dumps(postData))
-    return response
+# def create_new_insight(insight, xtkn, suitcase_id, endpoint=endpoint):
+#     """
+#     Arguments: insight (json), dest_suitcase (int)
+#     Returns: None. Creates new insights in the Suitcase provided from the Insight objects provided.
+#     Notes: Could be an improvement to return list of insight_ids created.
+#     To create a brand new insight, post the necessary insight data to the back-end without an insight ID.
+#     """
+#     ## Post to dest_suitcase
+#     url = endpoint + '/insights'
+#     postData = {'key': insight['key'], 'name': insight['name'], 'json': insight['json'], 'subheading': insight['subheading'], "suitcase_id": suitcase_id}
+#     response = requests.post(url,  headers={'content-type':'application/json', 'x-token':xtkn}, data=json.dumps(postData))
+#     return response
 
 def save_over_insight(insight, xtkn, insight_id, endpoint=endpoint):
     """
@@ -124,7 +124,7 @@ def remove_user_from_suitcase(user_id, suitcase_id, xtkn, endpoint=endpoint):
     response = requests.delete(url, headers={'content-type':'application/json', 'x-token':xtkn})
     return response
 
-def make_suitcase_public_link(suitcase_id, xtkn, endpoint=endpoint):
+def generate_suitcase_public_link(suitcase_id, xtkn, endpoint=endpoint):
     '''
     Arguments: suitcase_id, endpoint(default Seer endpoint)
     Returns: response, key
