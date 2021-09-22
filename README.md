@@ -1,4 +1,4 @@
 # seer-python-sdk
 
 ## Installing
-`pip install git+https://github.com/seer-data/pyseer.git`
+`pip install git+https://github.com/seer-data/seer-python-sdk.git`
