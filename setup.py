@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='seer-python-sdk',
+    name='seer_python_sdk',
     version='0.1',
     author="Adam Peaston",
     author_email="adam.peaston@seerdata.com.au",
