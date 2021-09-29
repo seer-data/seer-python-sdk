@@ -11,7 +11,7 @@ setuptools.setup(
     description="Seer python SDK",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/seer-data/seer-python-sdk.git",
+    url="https://github.com/seer-data/seer_python_sdk.git",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
