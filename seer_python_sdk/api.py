@@ -70,7 +70,7 @@ def delete_insight(insight_id, xtkn, endpoint=endpoint):
 #     response = requests.post(url,  headers={'content-type':'application/json', 'x-token':xtkn}, data=json.dumps(postData))
 #     return response
 
-def save_over_insight(insight, xtkn, insight_id, endpoint=endpoint):
+def save_over_insight(insight_id, insight, xtkn, endpoint=endpoint):
     """
     Arguments: insight_json (json), insight_id (int)
     Returns: None. Writes Insight JSON object to existing insight at Insight ID provided.
