@@ -93,7 +93,7 @@ def duplicate_suitcase(suitcase_id, xtkn, endpoint=endpoint):
     new_suitcase_id = response_json['data']['suitcase']['id']
     return new_suitcase_id
 
-def update_suitcase(data, suitcase_id, xtkn, endpoint=endpoint):
+def update_suitcase(suitcase_id, data, xtkn, endpoint=endpoint):
     """
     This function gets passed "suitcase" which is the same type of object as is returned by the function "get_suitcase", and the suitcase_id 
     for the suitcase that should be saved over, and saves over it. This does not work for sharing Suitcases.
@@ -110,7 +110,7 @@ def update_suitcase(data, suitcase_id, xtkn, endpoint=endpoint):
 #     """
 #     pass
 
-def share_suitcase(invites, suitcase_id, xtkn, endpoint=endpoint):
+def share_suitcase(suitcase_id, invites, xtkn, endpoint=endpoint):
     """
     invites should be formatted as a list of dicts: [{"user_id":2,"read_only":true}, {"user_id":3,"read_only":true}]
     """
@@ -119,7 +119,7 @@ def share_suitcase(invites, suitcase_id, xtkn, endpoint=endpoint):
     response = requests.post(url, headers={'content-type':'application/json', 'x-token':xtkn}, data=json.dumps(postData))
     return response
 
-def remove_user_from_suitcase(user_id, suitcase_id, xtkn, endpoint=endpoint):
+def remove_user_from_suitcase(suitcase_id, user_id, xtkn, endpoint=endpoint):
     url = endpoint+"/suitcases/{}/users/{}".format(suitcase_id,user_id)
     response = requests.delete(url, headers={'content-type':'application/json', 'x-token':xtkn})
     return response
@@ -140,14 +140,24 @@ def generate_suitcase_public_link(suitcase_id, xtkn, endpoint=endpoint):
         key = suitcase['key']
     return response, key
 
-# def transfer_suitcase_ownership(new_owner_user_id, suitcase_id, xtkn, endpoint=endpoint):
-#     """
-#     Careful, transferring ownership is a one-way function, will restrict what you can do with the suitcase after you are no longer the owner.
-#     """
-#     url = endpoint+"/suitcases/{}".format(suitcase_id)
-#     postData = {"user_id":new_owner_user_id}
-#     response = requests.put(url, headers={'content-type':'application/json', 'x-token':xtkn}, data=json.dumps(postData))
-#     return response
+def transfer_suitcase_ownership(suitcase_id, new_owner_user_id, xtkn, endpoint=endpoint):
+    """
+    Careful, transferring ownership is a one-way function, will restrict what you can do with the suitcase after you are no longer the owner.
+    """
+    url = endpoint+"/suitcases/{}".format(suitcase_id)
+    postData = {"user_id":new_owner_user_id}
+    response = requests.put(url, headers={'content-type':'application/json', 'x-token':xtkn}, data=json.dumps(postData))
+    return response
+
+def move_suitcase(suitcase_id, new_parent_suitcase_id, xtkn, endpoint=endpoint):
+    """
+    Arguments: suitcase_id, new_parent_suitcase_id
+    Returns: response
+    """
+    url = endpoint+"/suitcases/{}".format(suitcase_id)
+    postData = {"parent_id":new_parent_suitcase_id}
+    response = requests.put(url, headers={'content-type':'application/json', 'x-token':xtkn}, data=json.dumps(postData))
+    return response
 
 def delete_suitcase(suitcase_id, xtkn, endpoint=endpoint):
     """
