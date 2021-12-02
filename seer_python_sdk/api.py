@@ -167,3 +167,21 @@ def delete_suitcase(suitcase_id, xtkn, endpoint=endpoint):
     url = endpoint+"/suitcases/{}".format(suitcase_id)
     response = requests.delete(url,  headers={'content-type':'application/json', 'x-token':xtkn})
     return response
+
+
+def refresh_suitcases(suitcase_ids, xtkn, forceV2=False):
+    """
+    Refreshes list of Suitcases. Set forceV2 True to make data structure compatible with new Insight builder.
+    """
+    return requests.post(url=endpoint + "/suitcases/refresh",
+                         headers={'content-type': 'application/json', 'x-token': xtkn},
+                         json={"ids": suitcase_ids, "forceV2": forceV2})
+
+
+def refresh_insights(insight_ids, xtkn, forceV2=False):
+    """
+    Refreshes list of Insights. Set forceV2 True to make data structure compatible with new Insight builder.
+    """
+    return requests.post(url=endpoint + "/insights/refresh",
+                         headers={'content-type': 'application/json', 'x-token': xtkn},
+                         json={"ids": insight_ids, "forceV2": forceV2})
