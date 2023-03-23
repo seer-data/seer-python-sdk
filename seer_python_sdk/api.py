@@ -11,6 +11,16 @@ endpoint = "https://backend.seerplatform.com"
 See training material for details of Suitcases, Insights, and the seer-python-sdk API.
 """
 
+def get_all_suitcases(xtkn, endpoint=endpoint):
+    """
+    Arguments: suitcase_id (int)
+    Returns: Objects representing all suitcases the user has access to.
+    """
+    url = endpoint+"/suitcases"
+    response = requests.get(url, headers={'content-type':'application/json', 'x-token':xtkn})
+    suitcase = response.json()['data']
+    return suitcase
+
 def get_suitcase(suitcase_id, xtkn, endpoint=endpoint):
     """
     Arguments: suitcase_id (int)
@@ -167,36 +177,3 @@ def delete_suitcase(suitcase_id, xtkn, endpoint=endpoint):
     url = endpoint+"/suitcases/{}".format(suitcase_id)
     response = requests.delete(url,  headers={'content-type':'application/json', 'x-token':xtkn})
     return response
-
-# A couple of helper functions for retrieving data directly from the back-end.
-def query_to_rqst(query, xtkn):
-    '''Generates a request formatted for the Seer back-end.'''
-    rqst = {
-        "filters": {},
-        "dataset": list(query["dataset"])[0], 
-        "format":"json", 
-        "token":xtkn, 
-        "columns": {}, 
-        "rows": {}
-    }
-    
-    for k,v in query.items():
-        if k != 'dataset':
-            if v != "__ALL__":
-                rqst['filters'][k] = list(v)
-            else:
-                rqst['filters'][k] = "__ALL__"
-    return rqst
-
-def get_query_data(query, xtkn):
-    url = 'https://data.seerplatform.com/v2/data'
-    rqst = query_to_rqst(query, xtkn)
-    send_payload = json.dumps(rqst)
-    response = requests.post(url, data=send_payload)
-    
-    if response.status_code == 200:
-        return_payload = json.loads(response.content)
-        return return_payload
-    else:
-        print(f'Request failed with code: {response.status_code}')
-        return None
