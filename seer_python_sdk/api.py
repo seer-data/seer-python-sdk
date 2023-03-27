@@ -21,6 +21,15 @@ def get_all_suitcases(xtkn, endpoint=endpoint):
     suitcase = response.json()['data']
     return suitcase
 
+def get_child_suitcases(suitcase_id, xtkn):
+    """
+    Arguments: suitcase_id (int)
+    Returns: Objects representing all suitcases within the passed suitcase_id.
+    """
+    endpoint = f"https://backend.seerplatform.com/suitcases?parentId={suitcase_id}"
+    response = requests.get(endpoint, headers={'content-type':'application/json', 'x-token':xtkn})
+    return json.loads(response.content)['data']
+
 def get_suitcase(suitcase_id, xtkn, endpoint=endpoint):
     """
     Arguments: suitcase_id (int)
